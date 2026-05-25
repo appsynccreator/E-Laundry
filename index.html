@@ -2,32 +2,38 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0D47A1">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="E-Laundry">
-<meta name="description" content="E-Laundry Management System — Kelola laundry Anda dengan mudah">
+<meta name="description" content="E-Laundry Management System — Kelola laundry dengan mudah">
 
 <title>E-Laundry Management System</title>
 
-<!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
+<!-- Base href dinamis agar mendukung subfolder -->
+<script>
+  (function() {
+    var path = window.location.pathname;
+    var base = path.substring(0, path.lastIndexOf('/') + 1);
+    document.write('<base href="' + base + '">');
+  })();
+</script>
 
-<!-- Icons -->
+<link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icon-192.svg">
 <link rel="apple-touch-icon" href="icon-192.svg">
-
-<!-- Preconnect untuk performa -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- Konfigurasi URL GAS — edit file ini untuk mengganti URL deployment -->
-<script src="config.js"></script>
-
 <style>
-    /* ── SPLASH SCREEN (Responsif) ── */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   :root {
     --primary: #1565C0;
     --primary-dark: #0D47A1;
@@ -35,39 +41,29 @@
     --bg: #F0F4F8;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg);
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #1E293B;
   }
 
+  /* SPLASH SCREEN – Responsif & Besar */
   #splash {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    padding: 24px;
-    text-align: center;
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-    /* Pastikan konten terpusat sempurna */
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
     z-index: 9999;
+    text-align: center;
+    padding: 24px;
   }
 
-  /* Animasi ikon */
   .splash-icon {
     font-size: clamp(80px, 15vw, 140px);
     margin-bottom: 24px;
@@ -83,9 +79,8 @@
   .splash-title {
     font-size: clamp(32px, 8vw, 56px);
     font-weight: 800;
-    color: #fff;
+    color: white;
     margin-bottom: 8px;
-    letter-spacing: -0.3px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 
@@ -98,18 +93,19 @@
     font-weight: 500;
   }
 
-  /* Spinner lebih besar & proporsional */
   .splash-spinner {
     width: clamp(48px, 10vw, 72px);
     height: clamp(48px, 10vw, 72px);
     border: 4px solid rgba(255,255,255,0.25);
-    border-top-color: #fff;
+    border-top-color: white;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
     margin-bottom: 20px;
   }
 
-  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 
   .splash-status {
     font-size: clamp(14px, 3.5vw, 18px);
@@ -119,37 +115,9 @@
     padding: 8px 20px;
     border-radius: 40px;
     backdrop-filter: blur(4px);
-    letter-spacing: 0.3px;
   }
 
-  /* Penyesuaian khusus untuk layar sangat kecil (max-width: 480px) */
-  @media (max-width: 480px) {
-    .splash-icon {
-      margin-bottom: 16px;
-    }
-    .splash-sub {
-      margin-bottom: 32px;
-    }
-    .splash-status {
-      font-size: 12px;
-      padding: 6px 16px;
-    }
-  }
-
-  /* Penyesuaian untuk desktop besar (min-width: 1200px) */
-  @media (min-width: 1200px) {
-    .splash-icon {
-      margin-bottom: 32px;
-    }
-    .splash-title {
-      letter-spacing: -0.5px;
-    }
-    .splash-spinner {
-      margin-bottom: 28px;
-    }
-  }
-
-  /* Error state */
+  /* ERROR SCREEN */
   #error-screen {
     display: none;
     flex-direction: column;
@@ -162,14 +130,12 @@
   }
 
   .err-icon { font-size: 56px; margin-bottom: 16px; }
-
   .err-title {
     font-size: 20px;
     font-weight: 700;
     color: #C62828;
     margin-bottom: 8px;
   }
-
   .err-msg {
     font-size: 13px;
     color: #475569;
@@ -177,22 +143,20 @@
     line-height: 1.6;
     margin-bottom: 24px;
   }
-
   .err-btn {
     display: inline-block;
     padding: 12px 28px;
     background: var(--primary);
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 8px;
     font-size: 14px;
     font-weight: 600;
     font-family: inherit;
     cursor: pointer;
-    text-decoration: none;
   }
 
-  /* Iframe container (hidden saat splash) */
+  /* IFRAME APP */
   #app-frame {
     display: none;
     position: fixed;
@@ -201,11 +165,16 @@
     height: 100%;
     border: none;
   }
+
+  @media (max-width: 480px) {
+    .splash-icon { margin-bottom: 16px; }
+    .splash-sub { margin-bottom: 32px; }
+    .splash-status { font-size: 12px; padding: 6px 16px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- ── SPLASH SCREEN ── -->
 <div id="splash">
   <div class="splash-icon">🧺</div>
   <div class="splash-title">E-Laundry</div>
@@ -214,25 +183,27 @@
   <div class="splash-status" id="splash-status">Menghubungkan ke server...</div>
 </div>
 
-<!-- ── ERROR SCREEN ── -->
 <div id="error-screen">
   <div class="err-icon">⚠️</div>
   <div class="err-title">Gagal Memuat Aplikasi</div>
   <div class="err-msg" id="err-msg">
-    Tidak dapat terhubung ke server. Pastikan koneksi internet Anda aktif dan coba lagi.
+    Tidak dapat terhubung ke server. Pastikan koneksi internet Anda aktif.
   </div>
   <button class="err-btn" onclick="retryLoad()">🔄 Coba Lagi</button>
 </div>
 
-<!-- ── APP FRAME (konten penuh dari GAS) ── -->
 <iframe id="app-frame" title="E-Laundry Management System" allow="clipboard-write"></iframe>
 
-<script>
-  // GAS_URL dibaca dari config.js (dimuat di <head>)
-  // Jika config.js tidak ada atau belum diisi, tampil error
-  var GAS_URL = (typeof APP_CONFIG !== 'undefined' && APP_CONFIG.GAS_URL) ? APP_CONFIG.GAS_URL : '';
+<!-- Load config terlebih dahulu -->
+<script src="config.js"></script>
 
-  var LOAD_TIMEOUT_MS = 20000; // 20 detik
+<script>
+  // ================= KONFIGURASI DARI config.js =================
+  // GAS_URL diambil dari APP_CONFIG.GAS_URL (file config.js)
+  var GAS_URL = (typeof APP_CONFIG !== 'undefined' && APP_CONFIG.GAS_URL) 
+                ? APP_CONFIG.GAS_URL 
+                : null;
+  var LOAD_TIMEOUT_MS = 20000;
   var _timer = null;
   var _loaded = false;
 
@@ -259,56 +230,46 @@
     document.getElementById('error-screen').style.display = 'flex';
   }
 
-  function retryLoad() {
+  window.retryLoad = function() {
     _loaded = false;
     showSplash('Menghubungkan ulang...');
     loadApp();
-  }
+  };
 
   function loadApp() {
-    if (!GAS_URL) {
-      showError('URL server belum dikonfigurasi. Hubungi administrator sistem.');
+    // Validasi GAS_URL dari config.js
+    if (!GAS_URL || GAS_URL === 'https://script.google.com/macros/s/GANTI_DENGAN_ID_DEPLOYMENT/exec') {
+      showError('URL server belum dikonfigurasi dengan benar di file config.js. Hubungi administrator.');
       return;
     }
 
     var frame = document.getElementById('app-frame');
     frame.src = '';
 
-    // Timeout jika GAS tidak merespons
     _timer = setTimeout(function() {
-      if (!_loaded) {
-        showError('Server tidak merespons dalam batas waktu. Pastikan koneksi Anda aktif dan coba lagi.');
-      }
+      if (!_loaded) showError('Server tidak merespons. Periksa koneksi Anda.');
     }, LOAD_TIMEOUT_MS);
 
     showSplash('Memuat aplikasi...');
 
     frame.onload = function() {
-      // Beri sedikit delay agar konten GAS ter-render
       setTimeout(showApp, 300);
     };
-
     frame.onerror = function() {
-      showError('Gagal memuat aplikasi. Periksa koneksi internet Anda.');
+      showError('Gagal memuat aplikasi. Periksa koneksi internet.');
     };
-
     frame.src = GAS_URL;
   }
 
-  // Daftarkan Service Worker
+  // Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
       navigator.serviceWorker.register('sw.js')
-        .then(function(reg) {
-          console.log('[SW] Terdaftar, scope:', reg.scope);
-        })
-        .catch(function(err) {
-          console.warn('[SW] Gagal daftar:', err);
-        });
+        .then(reg => console.log('[SW] Terdaftar, scope:', reg.scope))
+        .catch(err => console.warn('[SW] Gagal:', err));
     });
   }
 
-  // Mulai load
   document.addEventListener('DOMContentLoaded', loadApp);
 </script>
 
