@@ -23,6 +23,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+<!-- Konfigurasi URL GAS — edit file ini untuk mengganti URL deployment -->
+<script src="config.js"></script>
+
 <style>
   /* ── SPLASH SCREEN ── */
   :root {
@@ -180,11 +183,9 @@
 <iframe id="app-frame" title="E-Laundry Management System" allow="clipboard-write"></iframe>
 
 <script>
-  // ──────────────────────────────────────────────
-  // KONFIGURASI — ganti GAS_URL dengan URL deploy GAS
-  // ──────────────────────────────────────────────
-  var GAS_URL = 'GANTI_DENGAN_URL_DEPLOYMENT_GAS';
-  // Contoh: 'https://script.google.com/macros/s/AKfycb.../exec'
+  // GAS_URL dibaca dari config.js (dimuat di <head>)
+  // Jika config.js tidak ada atau belum diisi, tampil error
+  var GAS_URL = (typeof APP_CONFIG !== 'undefined' && APP_CONFIG.GAS_URL) ? APP_CONFIG.GAS_URL : '';
 
   var LOAD_TIMEOUT_MS = 20000; // 20 detik
   var _timer = null;
@@ -220,7 +221,7 @@
   }
 
   function loadApp() {
-    if (!GAS_URL || GAS_URL === 'GANTI_DENGAN_URL_DEPLOYMENT_GAS') {
+    if (!GAS_URL) {
       showError('URL server belum dikonfigurasi. Hubungi administrator sistem.');
       return;
     }
