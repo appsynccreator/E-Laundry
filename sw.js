@@ -10,6 +10,7 @@ var SHELL_ASSETS = [
   basePath,
   basePath + 'index.html',
   basePath + 'manifest.json',
+  basePath + 'config.js',
   basePath + 'icon-192.svg',
   basePath + 'icon-512.svg'
 ];
