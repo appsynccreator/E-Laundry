@@ -11,6 +11,6 @@ var APP_CONFIG = {
   // URL deployment Google Apps Script
   // Ambil dari: GAS Editor → Deploy → Manage deployments → Copy URL
   // Format: https://script.google.com/macros/s/AKfycb.../exec
-  GAS_URL: 'https://script.google.com/macros/s/GANTI_DENGAN_ID_DEPLOYMENT/exec',
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbzPQ7oALF1zYRnPX1UIVRK9md2o4Arlfxp4GsOjGhG2Y6kM_ohX4iY6yYxgRUHe_wgqXg/exec',
 
 };
