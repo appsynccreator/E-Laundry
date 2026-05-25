@@ -1,0 +1,49 @@
+{
+  "name": "E-Laundry Management System",
+  "short_name": "E-Laundry",
+  "description": "Aplikasi manajemen laundry terintegrasi — transaksi, laporan, karyawan, dan lebih.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0D47A1",
+  "theme_color": "#0D47A1",
+  "lang": "id",
+  "dir": "ltr",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Transaksi Baru",
+      "short_name": "Transaksi",
+      "description": "Buka form transaksi baru",
+      "url": "/?page=transaksi-baru",
+      "icons": [
+        { "src": "icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Lihat ringkasan hari ini",
+      "url": "/?page=dashboard",
+      "icons": [
+        { "src": "icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" }
+      ]
+    }
+  ]
+}
